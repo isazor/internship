@@ -1,0 +1,29 @@
+#include"stdio.h"
+#include"string.h"
+
+main()
+{  struct ogrenci{
+	char ad[20];
+	int no;
+	float not1;
+}kisi[10];
+
+  int i,j,k;
+	printf("ogrenci sayisi :  ");  scanf("%d",&j);
+	for(i=0;i<j;i++)
+	{
+		printf("\n%d. ogrencinin adini girin : ",i+1); scanf("%s",kisi[i].ad);
+		printf("%s'in numarasini girin       : ",kisi[i].ad);scanf("%d",&kisi[i].no);
+		printf("%s'in not ortalamasini girin : ",kisi[i].ad);scanf("%f",&kisi[i].not1);
+	}
+    printf("\n");
+    for(i=0;i<j;i++)
+    {
+    	for(k=0;k<j;k++){
+		
+		printf("%s adli ogrencinin numarası: %d not ort: %f\n\n",kisi[i].ad,kisi[i].no,kisi[i].not1);
+
+	}
+}
+	
+}
