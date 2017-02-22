@@ -1,0 +1,181 @@
+//bilgileri alacak dersadı vize final ortalama 
+//2.
+#include"stdio.h"
+#include"string.h"
+#include"stdlib.h"
+
+
+struct ogrenci{
+	char ad[20];
+	int no;
+	float not1;
+};
+//char <-20+4=24 onlu(decimal) sistemde adreste 16lık sistem(hexa) 18'e eşit.yani 20den 38e atlar.
+   // int (*fp)(struct ogrenci *,int); 
+
+typedef void(*fpGuncelle)(struct ogrenci *,int);
+struct genel{//struct içinde fonk. pointer tanımladık değişkenleriyle.
+void (*fpGuncelle)(struct ogrenci *,int);
+void (*fpOgrenciekle)(struct ogrenci *,int);
+void (*fpYazdir)(struct ogrenci *,int);
+void (*fpSiralama)(struct ogrenci *,int);
+
+}a1;
+
+void (*fp)(struct ogrenci *, int);
+
+int karsi( char *girilen,char *kayitli,int uzunluk)
+{
+	int i=-1;
+	while(i++<uzunluk)
+	{
+		if(girilen[i]!=kayitli[i])
+		{
+		return 0;
+
+		break;
+	    }
+		else 
+		continue;
+    }
+    return 1;
+}
+/*----yapı oluşturup 
+------fonksi pointer
+------güncelle fp güncelle */
+//fonk pointer parantez içinde olacak.yoksa adres türüne dönen fonk tanımlanış olur.
+//normal pointerın aksine fp veri taşımaz
+//&atama operatörünü silebilirsin.
+//fp dizi olabilir.
+//kod fazlalığını önlemek için fp kullanılır.
+//sıralama,yazdırma,ekle,guncelle
+////--struct içi func pointer --main içi tanımlama + fp
+
+
+
+
+void guncelle(struct ogrenci *upd,int uzunluk)
+{
+	int num,i,g;
+	char isim[20];
+	
+	
+	printf("not guncelleme : \n1-evet\n2-hayir\t");scanf("%d",&g);
+if(1==g){
+	printf ("numarasini girin: ");scanf("%d",&num);
+for(i=0;i<uzunluk;i++)
+	{
+		if (num==upd[i].no)
+		{    printf("adi girin: ");scanf("%s",isim);
+		strupr(isim);
+
+            //if(!strcmp(isim,upd[i].ad))//yeni fonk
+            //strcmp stringleri karasilastirir.
+            //strlen fonksiyonu stringin karakter sayisini söyler.
+            if(1==karsi(isim,upd[i].ad,strlen(isim)))//dizi adıyla yada dizinin ilk elemanının adresi
+            
+			 {
+             		printf("yeni not: "); scanf("%f",&upd[i].not1);
+             		printf("\n");
+             		return;
+			 }
+			 else 
+			 printf("hatali isim. \n");
+        }
+	    else 
+	    {
+		printf("\nkayitli boyle bir numara yoktur.\n");
+        }
+	}//isim kontrol küçük harfde büyük harfte büyük kaydet
+}
+else if(2==g)
+return;
+else{
+printf ("hatali secim...\n");
+
+}
+}
+
+void ogrenciekle(struct ogrenci *ptr,int uzunluk) 
+{
+     
+	 int i;
+     char ad[15];
+   
+	
+	for(i=0;i<uzunluk;i++)
+	{
+		printf("\n%d. stu name: ",i+1); scanf("%s",ad);
+		strupr(ad);
+		strcpy(ptr[i].ad,ad);
+		printf("%s's number : ",ptr[i].ad);scanf("%d",&ptr[i].no);
+		printf("%s's grade  : ",ptr[i].ad);scanf("%f",&ptr[i].not1);
+	}
+}
+
+void yazdir(struct ogrenci *pt,int uzunluk)
+{
+	int i;
+	 for(i=0;i<uzunluk;i++)
+    {
+    		printf("\n%s'nin numarasi: %d not ort: %.2f\n\n",pt[i].ad,pt[i].no,pt[i].not1);
+                        
+	}
+}
+
+
+void siralama(struct ogrenci *p,int uzunluk)//bubble sort
+{
+	int i,j,te;
+	char tena[20];
+
+	for(i=1;i<uzunluk;i++)
+	{
+		for(j=0;j<uzunluk-1;j++)
+		{
+			if(p[j].not1<p[j+1].not1)
+			{
+				te=p[j].not1;
+				p[j].not1=p[j+1].not1;
+				p[j+1].not1=te;
+				te=p[j].no;
+				p[j].no=p[j+1].no;
+				p[j+1].no=te;
+			    strcpy(tena,p[j].ad);
+				strcpy(p[j].ad,p[j+1].ad);
+				strcpy(p[j+1].ad,tena);
+			}
+		}
+	}
+
+	for(i=0;i<uzunluk;i++)
+	{
+	printf("%s adli ogrencinin numarasi: %d not ort: %.1f\n\n",p[i].ad,p[i].no,p[i].not1);
+	}
+	
+}
+int eslestir()//yapı içindeki elemanlarla fonksiyonları eşleştirdik.
+{    
+    //a1.fpSiralama=siralama;
+ 	a1.fpOgrenciekle=ogrenciekle;//fp=ogrenciekle; veya fp =&ogrenciekle; iki turlu fonksiyon adreslerini gecirebilir &fp veya fp olarak
+	a1.fpYazdir=yazdir;
+    a1.fpSiralama=siralama;
+    a1.fpGuncelle=guncelle;
+}
+printet()
+{
+	printf("\n\tSIRALAMA\n");
+}
+main(){
+    int ogrsys; 
+    printf("\n\togrenci sayisi :  ");  scanf("%d",&ogrsys);
+    struct ogrenci kisi[10];
+    eslestir();
+    a1.fpOgrenciekle(&kisi[0],ogrsys);//fp parametleri
+    printet();
+     a1.fpSiralama(&kisi[0],ogrsys);
+    fp=guncelle;
+    (*fp)(&kisi[0],ogrsys);
+    a1.fpSiralama(&kisi[0],ogrsys);
+}
+
