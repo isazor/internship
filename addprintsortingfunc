@@ -1,0 +1,98 @@
+
+//2.
+#include"stdio.h"
+#include"string.h"
+#include"stdlib.h"
+
+struct ogrenci{
+	char ad[20];
+	int no;
+	float not1;
+};
+//char <-20+4=24 onlu(decimal) sistemde adreste 16lık sistem(hexa) 18'e eşit.yani 20den 38e atlar.
+void guncelle(struct ogrenci *upd)
+{
+	int a,i;
+	char b;
+	printf ("numarasini girin: ");scanf("%d",&a);
+	for(i=0;i<10;i++){
+		if(a==upd[i].not1);
+		{
+			printf("adi girin: ");gets(b);
+			if(strcmp(b,upd[i].ad)){
+		
+			printf("yeni not: "); scanf("%f",&upd[i].not1);
+		}
+		}
+	break;
+	}
+
+
+}
+
+void ogrenciekle(struct ogrenci *ptr,int uzunluk) 
+{
+     
+	 int i,j,k;
+
+
+	
+	for(i=0;i<uzunluk;i++)
+	{
+		printf("\n%d. ogrencinin adini girin : ",i+1); scanf("%s",ptr[i].ad);
+		printf("%s'in numarasini girin       : ",ptr[i].ad);scanf("%d",&ptr[i].no);
+		printf("%s'in not ortalamasini girin : ",ptr[i].ad);scanf("%f",&ptr[i].not1);
+	}
+}
+
+void yazdir(struct ogrenci *pt,int uzunluk)
+{
+	int i,k;
+	 for(i=0;i<uzunluk;i++)
+    {
+    		printf("%s'nin numarasi: %d not ort: %.2f\n\n",pt[i].ad,pt[i].no,pt[i].not1);
+                        
+	}
+}
+
+void siralama(struct ogrenci *p,int uzunluk)
+{
+	int i,j,ge;
+
+	for(i=1;i<uzunluk;i++)
+	{
+		for(j=0;j<uzunluk-1;j++)
+		{
+			if(p[j].not1<p[j+1].not1)
+			{
+				ge=p[j].not1;
+				p[j].not1=p[j+1].not1;
+				p[j+1].not1=ge;
+			}
+			
+		}
+	}
+
+	for(i=0;i<uzunluk;i++)
+	{
+	printf("%s adli ogrencinin numarasi: %d not ort: %.1f\n\n",p[i].ad,p[i].no,p[i].not1);
+	}
+	
+}
+
+main()
+  
+  {
+  	
+    int j; 
+    printf("ogrenci sayisi :  ");  scanf("%d",&j);
+    struct ogrenci kisi[10];
+    ogrenciekle(&kisi[0],j);
+   // printf("\n");
+   // yazdir(&kisi[0],j);
+    printf("\nSIRALAMA\n");
+    siralama(&kisi[0],j);
+    guncelle(&kisi[0]);
+    siralama(&kisi[0],j);
+
+ }
